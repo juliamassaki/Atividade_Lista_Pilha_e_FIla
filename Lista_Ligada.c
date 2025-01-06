@@ -77,25 +77,43 @@ PONT buscaSeqOrd(LISTA* l, TIPOCHAVE ch) {
   return NULL;
 }
 
-PONT buscaSeqExc(LISTA* l, TIPOCHAVE ch, PONT* ant) {
-  *ant = NULL;
-  PONT atual = l->inicio;
-  while (atual != NULL && atual->reg.chave < ch) {
-    *ant = atual;
-    atual = atual->prox;
-  }
-  if (atual != NULL && atual->reg.chave == ch) return atual;
-  return NULL;
+PONT buscaSeqExc(LISTA* l, TIPOCHAVE ch, PONT* ant, PONT* prox){
+    *ant = NULL;
+    *prox = NULL;
+    PONT atual = l->inicio;
+    while ((atual != NULL) && (atual->reg.chave<ch)) {
+        *ant = atual;
+        *prox = atual->prox;
+        atual = atual->prox;
+    }
+    if (atual != NULL && atual->reg.chave == ch) {
+        if (atual->prox != NULL) {
+            *prox = atual->prox;
+        } else {
+            *prox = NULL;
+        }
+        return atual;
+    }
+    return NULL;
 }
 
 bool excluirElemLista(LISTA* l, TIPOCHAVE ch) {
-  PONT ant, i;
-  i = buscaSeqExc(l, ch, &ant);
+  PONT ant, prox, i;
+  i = buscaSeqExc(l, ch, &ant, &prox);
   if (i == NULL) return false;
-  if (ant == NULL) l->inicio = i->prox;
-  else ant->prox = i->prox;
-  free(i);
-  return true;
+  if (ant == NULL) {
+      l->inicio = i->prox;
+      if (i->prox != NULL) {
+          i->prox->ant = NULL;
+      }
+    } else {
+        ant->prox = i->prox;
+        if (i->prox != NULL) {
+            i->prox->ant = ant;
+        }
+    }
+    free(i);
+    return true;
 }
 
 void reinicializarLista(LISTA* l) {
