@@ -24,8 +24,9 @@ typedef struct {
 /* Inicialização da fila ligada (a fila jah esta criada e eh apontada 
 pelo endereco em f) */
 void inicializarFila(FILA* f){
-  f->inicio = NULL;
-  f->fim = NULL;
+  f->inicio = (PONT)malloc (sizeof(ELEMENTO));
+  f->inicio-> prox = NULL;
+  f->fim = f-> inicio;
 } /* inicializarFila */
 
 /* Retornar o tamanho da fila (numero de elementos) */
@@ -78,14 +79,15 @@ PONT retornarUltimo(FILA* f, TIPOCHAVE* ch){
 
 
 /* Inserção no fim da fila */
-bool inserirNaFila(FILA* f,REGISTRO reg) {
+bool inserirNaFila(FILA* f, REGISTRO reg) {
+  /* COMPLETAR - REVISAR o c ́odigo desta fun ̧c~ao */
   PONT novo = (PONT) malloc(sizeof(ELEMENTO));
   novo->reg = reg;
   novo->prox = NULL;
-  if (f->inicio==NULL){
-     f->inicio = novo;
-  }else{
-     f->fim->prox = novo;
+  if (f->inicio == NULL) {
+    f->inicio = novo;
+  } else {
+    f->fim->prox = novo;
   }
   f->fim = novo;
   return true;
@@ -93,14 +95,15 @@ bool inserirNaFila(FILA* f,REGISTRO reg) {
 
 /* Excluir  */
 bool excluirDaFila(FILA* f, REGISTRO* reg) {
-  if (f->inicio==NULL){
-    return false;                     
+  /* COMPLETAR - REVISAR o c ́odigo desta fun ̧c~ao */
+  if (f->inicio == NULL) {
+    return false;
   }
   *reg = f->inicio->reg;
   PONT apagar = f->inicio;
   f->inicio = f->inicio->prox;
   free(apagar);
-  if (f->inicio == NULL){
+  if (f->inicio == NULL) {
     f->fim = NULL;
   }
   return true;
