@@ -14,7 +14,7 @@ typedef struct {
 typedef struct aux {
   REGISTRO reg;
   struct aux* prox;
-} ELEMENTO, *PONT;;
+} ELEMENTO, *PONT;
 
 typedef struct {
   PONT inicio;
@@ -80,32 +80,31 @@ PONT retornarUltimo(FILA* f, TIPOCHAVE* ch){
 
 /* Inserção no fim da fila */
 bool inserirNaFila(FILA* f, REGISTRO reg) {
-  /* COMPLETAR - REVISAR o c ́odigo desta fun ̧c~ao */
   PONT novo = (PONT) malloc(sizeof(ELEMENTO));
   novo->reg = reg;
   novo->prox = NULL;
-  if (f->inicio == NULL) {
-    f->inicio = novo;
+  if (f->inicio->prox == NULL) {
+    f->inicio->prox = novo;
+    f->fim = novo;
   } else {
     f->fim->prox = novo;
+    f->fim = novo;
   }
-  f->fim = novo;
   return true;
 } /* inserir */
 
 /* Excluir  */
 bool excluirDaFila(FILA* f, REGISTRO* reg) {
-  /* COMPLETAR - REVISAR o c ́odigo desta fun ̧c~ao */
-  if (f->inicio == NULL) {
+  if (f->inicio->prox == NULL) {
     return false;
   }
-  *reg = f->inicio->reg;
-  PONT apagar = f->inicio;
-  f->inicio = f->inicio->prox;
-  free(apagar);
-  if (f->inicio == NULL) {
-    f->fim = NULL;
+  PONT apagar = f->inicio->prox;
+  *reg = apagar->reg;
+  f->inicio->prox = apagar->prox;
+  if (f->inicio->prox == NULL) {
+    f->fim = f->inicio;
   }
+  free(apagar);
   return true;
 } /* excluirDaFila */
 
