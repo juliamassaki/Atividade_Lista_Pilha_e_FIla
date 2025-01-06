@@ -9,9 +9,9 @@ typedef struct {
     // outros campos...
 } REGISTRO;
 
-typedef struct tempRegistro {
+typedef struct aux {
     REGISTRO reg;
-    struct tempRegistro* prox;
+    struct aux *ant, *prox;
 } ELEMENTO;
 
 typedef ELEMENTO* PONT;
