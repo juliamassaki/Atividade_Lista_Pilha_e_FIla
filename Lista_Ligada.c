@@ -26,7 +26,7 @@ int tamanho(LISTA* l);
 int tamanhoEmBytes(LISTA* l);
 PONT buscaSequencial(LISTA* l, TIPOCHAVE ch);
 PONT buscaSeqOrd(LISTA* l, TIPOCHAVE ch);
-PONT buscaSeqExc(LISTA* l, TIPOCHAVE ch, PONT* ant);
+PONT buscaSeqExc(LISTA* l, TIPOCHAVE ch, PONT* ant, PONT* prox);
 bool excluirElemLista(LISTA* l, TIPOCHAVE ch);
 void reinicializarLista(LISTA* l);
 bool inserirElemListaOrd(LISTA* l, REGISTRO reg);
